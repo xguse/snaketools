@@ -6,7 +6,7 @@
 import pytest
 
 
-from snaketools import snaketools
+from snaketools import snaketools  # noqa: F104
 
 
 @pytest.fixture
