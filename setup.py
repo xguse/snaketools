@@ -29,7 +29,7 @@ test_requirements = [
 
 setup(
     name='snaketools',
-    version='0.0.1',
+    version='version='0.0.1'',
     description="Small library of helper tools for setting up, graphing, and working with Snakemake rules.",
     long_description=readme + '\n\n' + history,
     author="Gus Dunn",
