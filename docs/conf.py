@@ -45,7 +45,7 @@ import snaketools
 # Set things up for RTD to be able to autogenerate our api-docs
 def run_apidoc(_):
     cur_dir = Path(__file__).parent.resolve()
-    module_path = cur_dir.parent / "src/veoibd_synapse"
+    module_path = cur_dir.parent / "snaketools"
     cmd_opts = "-M -f -o {cur_dir} {module_path} -H 'Source Code Documentation'"
     opt_list = shlex.split(cmd_opts.format(cur_dir=str(cur_dir),
                                            module_path=str(module_path)))
