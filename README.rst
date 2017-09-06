@@ -28,7 +28,21 @@ Small library of helper tools for setting up, graphing, and working with Snakema
 Features
 --------
 
-* TODO
+- ``SnakeRun`` object to initialize and manage information common to the whole run, such as:
+    - a copy of the config values from the config file provided to ``snakemake``.
+    - a place to store global variables needed throughout the run.
+    - more
+
+- ``SnakeRule`` object to manage the initialization and deployment of rule-specific information including:
+    - the rule name
+    - a default out directory deduced from the SnakeRun object
+    - a default log file path
+    - a "pretty name" for the rule to be displayed in the DAG graphs.
+    - attributes that store the input, output, and params values for later use.
+    - a copy of the values specific to this rule from the original configuration file.
+    - more
+
+- ``recode_graph`` function that cleans up the default output of ``snakemake --dag`` and allows the use of pretty names stored in the ``SnakeRule`` objects.
 
 Credits
 ---------
