@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 """Provide error classes for snaketools."""
-
-# Metadata
-__author__ = "Gus Dunn"
-__email__ = "w.gus.dunn@gmail.com"
+from snaketools import __author__, __email__
 
 
 class SnaketoolsError(Exception):
