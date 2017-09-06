@@ -105,7 +105,7 @@ class SnakeRule(object):
         self._import_config_dict()
 
     def _import_config_dict(self):
-        """Inport configuration values set for this rule so they are directly accessable as attributes."""
+        """Import configuration values set for this rule so they are directly accessable as attributes."""
         try:
             for key, val in self.run.cfg[self.name.upper()].items():
                 self.__setattr__(key, val)
