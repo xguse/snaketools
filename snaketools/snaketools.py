@@ -68,9 +68,9 @@ class SnakeRun(object):
         self.cfg = cfg
         self.name = common["RUN_NAME"]
         try:
-            self.d = common["INTERIM_DIR"]
+            self.interim_dir = common["INTERIM_DIR"]
         except KeyError:
-            self.d = None
+            self.interim_dir = None
         self.out_dir = Path("{base_dir}/{run_name}".format(base_dir=common["OUT_DIR"],
                                                            run_name=self.name
                                                            )
