@@ -1,4 +1,10 @@
 
+v0.0.3 / 2017-09-15
+===================
+
+  * Configure pyup
+  * SnakeRun.d -> SnakeRune.interim_dir
+
 v0.0.2 / 2017-09-06
 ===================
 
