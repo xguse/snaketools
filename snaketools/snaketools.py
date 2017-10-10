@@ -4,7 +4,6 @@
 
 # Imports
 from pathlib import Path
-
 import textwrap
 from collections import OrderedDict
 
@@ -72,9 +71,7 @@ class SnakeRun(object):
         except KeyError:
             self.interim_dir = None
         self.out_dir = Path("{base_dir}/{run_name}".format(base_dir=common["OUT_DIR"],
-                                                           run_name=self.name
-                                                           )
-                            )
+                                                           run_name=self.name))
         self.pretty_names = {}
         self.log_dir = self.out_dir / "logs"
 
