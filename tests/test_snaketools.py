@@ -3,23 +3,56 @@
 
 """Tests for `snaketools` package."""
 
+from pathlib import Path
+
 import pytest
 
+import yaml
+
+from munch import munchify, Munch
 
 from snaketools import snaketools  # noqa: F104
 
-
-@pytest.fixture
-def response():
-    """Sample pytest fixture.
-
-    See more at: http://doc.pytest.org/en/latest/fixture.html
-    """
-    # import requests
-    # return requests.get('https://github.com/audreyr/cookiecutter-pypackage')
+__all__ = ["config_1_dict",
+           "config_1",
+           "snakefile_1",
+           "snakerun_1"]
 
 
-def test_content(response):
-    """Sample pytest test function with the pytest fixture as an argument."""
-    # from bs4 import BeautifulSoup
-    # assert 'GitHub' in BeautifulSoup(response.content).title.string
+def process_config(config=None):
+    """Prepare single config file."""
+    if config is None:
+        return Munch()
+    else:
+        if isinstance(config, str):
+            config = Path(config)
+        return munchify(yaml.safe_load(config.open()))
+
+
+@pytest.fixture()
+def config_1_dict():
+    """Provide dict version of config_1.yaml."""
+    config = process_config(config=Path("tests/files/configs/conf_1.yaml"))
+    return config
+
+
+@pytest.fixture()
+def config_1(config_1_dict):
+    """Provide fully processed config_1.yaml."""
+    config = config_1_dict
+    return snaketools.pathify_by_key_ends(config)
+
+
+@pytest.fixture()
+def snakefile_1():
+    """Provide path to snakefile_1.yaml."""
+    return Path('tests/files/snakefiles/Snakefile_1')
+
+
+@pytest.fixture()
+def snakerun_1(config_1, snakefile_1):
+    """Provide empty SnakeRun object."""
+    snakefile = snakefile_1
+    cfg = config_1
+    run = snaketools.SnakeRun(cfg=cfg, snakefile=snakefile)
+    return run
