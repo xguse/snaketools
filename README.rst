@@ -6,12 +6,15 @@ SnakeTools
 .. image:: https://img.shields.io/pypi/v/snaketools.svg
         :target: https://pypi.python.org/pypi/snaketools
 
-.. image:: https://img.shields.io/travis/xguse/snaketools.svg
-        :target: https://travis-ci.org/xguse/snaketools
+.. image:: https://img.shields.io/travis/xguse/snaketools.svg?style=flat-square
+   :target: https://travis-ci.org/xguse/snaketools
 
 .. image:: https://readthedocs.org/projects/snaketools/badge/?version=latest
         :target: https://snaketools.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
+
+.. image:: https://img.shields.io/coveralls/xguse/snaketools.svg?style=flat-square
+   :target: 
 
 .. image:: https://pyup.io/repos/github/xguse/snaketools/shield.svg
      :target: https://pyup.io/repos/github/xguse/snaketools/
