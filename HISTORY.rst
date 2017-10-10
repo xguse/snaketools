@@ -1,4 +1,16 @@
 
+v0.0.4 / 2017-10-10
+===================
+
+  * added preliminary test suite
+  * Makefile: changed `install` to use `pip install -e .`
+  * added example files for testing
+  * requirements.txt: created with `pipreqs`
+  * snaketools.py: reorder functions
+  * snaketools.py: formatting
+  * ignore .vscode/
+  * pin all reqs since pyup now manages
+
 v0.0.3 / 2017-09-15
 ===================
 
