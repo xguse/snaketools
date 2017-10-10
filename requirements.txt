@@ -6,3 +6,4 @@ recommonmark==0.4.0
 cryptography==1.8.1
 Sphinx==1.6.4
 PyYAML==3.12
+flake8
