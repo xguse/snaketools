@@ -1,0 +1,16 @@
+COMMON:
+    RUN_NAME: run_name
+    OUT_DIR: "data/processed"
+    INTERIM_DIR: "data/interim"
+    DRAW_RULE: 'all'
+    DRAW_PRETTY_NAMES: True
+
+
+# --------------------------------------
+RULE_1:
+    PARAMS:
+        PARAM_1: 1
+        PARAM_2: string
+
+    IN:
+        IN_FILE_1_PATH: 'files/in_files/in_file_1.txt'
