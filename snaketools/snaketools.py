@@ -14,46 +14,6 @@ from logzero import logger as log
 from snaketools import errors as e
 
 
-def apply_template(template, keywords):
-    """Return a list of strings of form ``template`` with values in ``keywords`` inserted.
-
-    Args:
-        template (``str``): a string containing keywords (``{kw_name}``).
-        keywords (``dict``-like): dict with keys of appropriate keyword names and values as equal length ORDERED lists
-                                  with the correct values to be inserted.
-    """
-    # Check lengths of keywords
-    list_lens = set([len(x) for x in keywords.values()])
-    if len(list_lens) != 1:
-        raise e.ValidationError("keywords dict must contain values of constant length.")
-
-    formatted = []
-
-    for i in range(len(list(keywords.values())[0])):
-        args = {k: v[i] for k, v in keywords.items()}
-        formatted.append(template.format(**args))
-
-    return formatted
-
-
-def pathify_by_key_ends(dictionary):
-    """Return a dict that has had all values with keys containing the suffixes: '_PATH' or '_DIR' converted to Path() instances.
-
-    Args:
-        dictionary (dict-like): Usually the loaded, processed config file as a `dict`.
-
-    Returns:
-        dict-like: Modified version of the input.
-    """
-    for key, value in dictionary.items():
-        if isinstance(value, dict):
-            pathify_by_key_ends(value)
-        elif key.endswith("_PATH") or key.endswith("_DIR"):
-            dictionary[key] = Path(value)
-
-    return dictionary
-
-
 class SnakeRun(object):
     """Initialize and manage information common to the whole run."""
 
@@ -109,6 +69,54 @@ class SnakeRule(object):
             self.cfg = True
         except KeyError:
             self.cfg = False
+
+
+def apply_template(template, keywords):
+    """Return a list of strings of form ``template`` with values in ``keywords`` inserted.
+
+    Args:
+        template (``str``): a string containing keywords (``{kw_name}``).
+        keywords (``dict``-like): dict with keys of appropriate keyword names and values as equal length ORDERED lists
+                                  with the correct values to be inserted.
+    """
+    # Check lengths of keywords
+    list_lens = set([len(x) for x in keywords.values()])
+    if len(list_lens) != 1:
+        raise e.ValidationError("keywords dict must contain values of constant length.")
+
+    formatted = []
+
+    for i in range(len(list(keywords.values())[0])):
+        args = {k: v[i] for k, v in keywords.items()}
+        formatted.append(template.format(**args))
+
+    return formatted
+
+
+def pathify_this(key):
+    """Return `True` if the value associated with this key should be pathified."""
+    pathify_these = {"PATH",
+                     "FILE",
+                     "DIR"}
+    return bool(key.split("_")[-1] in pathify_these)
+
+
+def pathify_by_key_ends(dictionary):
+    """Return a dict that has had all values with keys containing the suffixes: '_FILE', '_PATH' or '_DIR' converted to Path() instances.
+
+    Args:
+        dictionary (dict-like): Usually the loaded, processed config file as a `dict`.
+
+    Returns:
+        dict-like: Modified version of the input.
+    """
+    for key, value in dictionary.items():
+        if isinstance(value, dict):
+            pathify_by_key_ends(value)
+        elif key.endswith("_PATH") or key.endswith("_DIR"):
+            dictionary[key] = Path(value)
+
+    return dictionary
 
 
 # DAG and rulegraph stuff
