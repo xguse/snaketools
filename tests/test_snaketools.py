@@ -11,7 +11,7 @@ import yaml
 
 from munch import munchify, Munch
 
-from snaketools import snaketools  # noqa: F104
+from snaketools import snaketools  # noqa: F403,F401
 
 __all__ = ["config_1_dict",
            "config_1",

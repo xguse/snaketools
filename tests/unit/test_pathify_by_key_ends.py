@@ -1,14 +1,9 @@
 """Unit test the pathify_by_key_ends function."""
 from pathlib import Path
 
-from munch import Munch
-
-import pytest
-
 from snaketools import snaketools
-from snaketools import errors as e
 
-from tests.test_snaketools import *
+from tests.test_snaketools import *  # noqa: F403,F401
 
 
 def test_pathify_this():

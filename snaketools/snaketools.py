@@ -3,13 +3,13 @@
 """Provide code supporting the running and automating of Snakemake rules."""
 
 # Imports
+from collections import OrderedDict
 from pathlib import Path
 import textwrap
-from collections import OrderedDict
 
 import munch
 
-from logzero import logger as log
+from logzero import logger as log  # noqa: F401
 
 from snaketools import errors as e
 

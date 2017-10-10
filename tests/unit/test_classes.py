@@ -3,11 +3,9 @@ from pathlib import Path
 
 from munch import Munch
 
-import pytest
-
 from snaketools import snaketools
 
-from tests.test_snaketools import *
+from tests.test_snaketools import *   # noqa: F403,F401
 
 
 def test_init_snakerun(snakerun_1, config_1, snakefile_1):
