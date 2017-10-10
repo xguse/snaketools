@@ -13,8 +13,10 @@ SnakeTools
         :target: https://snaketools.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
 
-.. image:: https://img.shields.io/coveralls/xguse/snaketools.svg?style=flat-square
-   :target: 
+.. image:: https://coveralls.io/repos/github/xguse/snaketools/badge.svg
+        :target: https://coveralls.io/github/xguse/snaketools
+        :alt: Test Coverage Status
+
 
 .. image:: https://pyup.io/repos/github/xguse/snaketools/shield.svg
      :target: https://pyup.io/repos/github/xguse/snaketools/
