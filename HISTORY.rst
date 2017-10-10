@@ -1,4 +1,12 @@
 
+v0.0.5 / 2017-10-10
+===================
+
+  * requirements_dev.txt: update and pin reqs
+  * flake8 fixes
+  * tox.ini: simplified config
+  * added flake8 to reqs
+
 v0.0.4 / 2017-10-10
 ===================
 
