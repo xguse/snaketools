@@ -13,8 +13,8 @@ SnakeTools
         :target: https://snaketools.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
 
-.. image:: https://coveralls.io/repos/github/xguse/snaketools/badge.svg
-        :target: https://coveralls.io/github/xguse/snaketools
+.. image:: https://coveralls.io/repos/github/xguse/snaketools/badge.svg?branch=master
+        :target: https://coveralls.io/github/xguse/snaketools?branch=master
         :alt: Test Coverage Status
 
 
