@@ -122,15 +122,15 @@ def pathify_by_key_ends(dictionary):
 # DAG and rulegraph stuff
 def digest_node_line(line):
     """Return OrderedDict of relevant line parts."""
-    l = line.strip()
+    line = line.strip()
 
     d = OrderedDict()
-    d["num"], fields = l.split('[')
+    d["num"], fields = line.split('[')
     fields = fields.replace('rounded,dashed', 'rounded-dashed')
     fields = fields.rstrip('];').split(',')
     fields[-1] = fields[-1].replace('rounded-dashed', 'rounded,dashed')
-    for f in fields:
-        key, value = f.split('=')
+    for field in fields:
+        key, value = field.split('=')
         d[key.strip()] = value.strip().replace('"', '').replace("'", "")
 
     return d
