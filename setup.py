@@ -1,9 +1,35 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
 """The setup script."""
 
 from setuptools import setup, find_packages
+from pathlib import Path
+
+
+def filter_req_paths(paths, func):
+    """Return list of filtered libs."""
+    if not isinstance(paths, list):
+        raise ValueError("Paths must be a list of paths.")
+
+    libs = set()
+    junk = set(['\n'])
+    for p in paths:
+        with p.open(mode='r') as reqs:
+            lines = set([line for line in reqs if func(line)])
+            libs.update(lines)
+
+    return list(libs - junk)
+
+
+def is_pipable(line):
+    """Filter for pipable reqs."""
+    if "# not_pipable" in line:
+        return False
+    elif line.startswith('#'):
+        return False
+    else:
+        return True
+
 
 with open('README.rst') as readme_file:
     readme = readme_file.read()
@@ -11,21 +37,12 @@ with open('README.rst') as readme_file:
 with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
-requirements = [
-    "snakemake",
-    "logzero",
-    "munch",
-]
+requirements = filter_req_paths(paths=[Path("requirements.txt")],
+                                func=is_pipable)
 
-setup_requirements = [
-    'pytest-runner',
-    # TODO(xguse): put setup requirements (distutils extensions, etc.) here
-]
+setup_requirements = ["pytest-runner"]
 
-test_requirements = [
-    'pytest',
-    # TODO: put package test requirements here
-]
+test_requirements = ["pytest"]
 
 setup(
     name='snaketools',
