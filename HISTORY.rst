@@ -2,6 +2,23 @@
 Change Log
 **********
 
+v0.0.6 / 2017-10-26
+===================
+
+  * added rewrite_snakefile_no_rules()
+  * flake8
+  * requirements.txt: removed dev-reqs
+  * requirements.txt: pinned flake8
+  * setup.py: upgraded to read from req files
+  * MANIFEST.in: include req files
+  * upgraded Makefile
+  * tox.ini: set line-length etc
+  * setup.cfg: ignore W292
+  * setup.cfg: exclude lib & bin from flake8
+  * updated .gitignore
+  * added coveralls badge
+  * HISTORY.rst: replaced header text
+
 
 v0.0.5 / 2017-10-10
 ===================
