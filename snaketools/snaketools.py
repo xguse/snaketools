@@ -189,3 +189,28 @@ def recode_graph(dot, new_dot, pretty_names, rules_to_drop, color=None, use_pret
                         new_dot.write(line)
                     else:
                         new_dot.write(line)
+
+
+def rewrite_snakefile_no_rules(infile, outfile):
+    """Write new file, omitting the snakemake grammar sections."""
+    def rule_declaration(line):
+        return line.startswith("rule")
+
+    def startswith_indent(line):
+        return line.startswith("    ")
+
+    def get_line_after_rule(file):
+        for line in file:
+            if not startswith_indent(line):
+                return line
+
+    infile = Path(infile)
+    outfile = Path(outfile)
+
+    with outfile.open('w') as out, infile.open('r') as snek:
+
+        for line in snek:
+            if not rule_declaration(line):
+                out.write(line)
+            else:
+                out.write(get_line_after_rule(line))
