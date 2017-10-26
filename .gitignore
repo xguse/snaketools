@@ -1,3 +1,34 @@
+# mypy stuff
+.mypy_cache
+
+# binary document-type files
+*.doc
+*.docx
+*.xls
+*.xlsx
+*.ppt
+*.pptx
+*.pdf
+*.svg
+
+
+# LibreOffice lock files
+.~lock.*
+
+# Snakemake
+.snakemake/
+
+# IPython NB Checkpoints
+.ipynb_checkpoints/
+
+# exclude data from source control by default
+/data/
+/references/
+
+# exclude notebooks and reports from source control by default
+/notebooks/
+/reports/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -62,5 +93,4 @@ target/
 .idea
 .vscode
 
-# pyenv python configuration file
-.python-version
+
