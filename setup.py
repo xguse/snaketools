@@ -37,8 +37,10 @@ with open('README.rst') as readme_file:
 with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
-requirements = filter_req_paths(paths=[Path("requirements.txt")],
-                                func=is_pipable)
+requirements = filter_req_paths(
+    paths=[Path("requirements.txt"),
+           Path("requirements.pip.txt")],
+    func=is_pipable)
 
 setup_requirements = ["pytest-runner"]
 
