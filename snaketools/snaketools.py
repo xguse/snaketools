@@ -38,6 +38,9 @@ class SnakeRun(object):
         self.pretty_names = {}
         self.log_dir = self.out_dir / "logs"
 
+        self.rules = munch.Munch()
+
+
 
 class SnakeRule(object):
     """Manage the initialization and deployment of rule-specific information."""
