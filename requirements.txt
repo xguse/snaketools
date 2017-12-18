@@ -1,2 +1,2 @@
 munch==2.2.0
-snakemake
+snakemake==4.3.1
