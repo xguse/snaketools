@@ -2,6 +2,18 @@
 Change Log
 **********
 
+v0.0.7 / 2017-12-18
+===================
+
+  * change pyup check to monthly
+  * update reqs from PYUP
+  * snaketools: SnakeRule now registers with SnakeRun
+  * snaketools: added attr SnakeRule.extra for more params
+  * snaketools: added attr SnakeRun.rules
+  * snaketools: use __all__ for importing from file
+  * update makefile
+  * update reqs
+
 v0.0.6 / 2017-10-26
 ===================
 
