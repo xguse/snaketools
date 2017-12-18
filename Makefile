@@ -1,8 +1,28 @@
 .PHONY: clean clean-test clean-pyc clean-build docs help
 .DEFAULT_GOAL := help
 
-
 PACKAGE_NAME = snaketools
+CONDA_ENV_NAME = $(PACKAGE_NAME)
+CONDA_ROOT = $(shell conda info --root)
+CONDA_ENV_DIR = $(CONDA_ROOT)/envs/$(CONDA_ENV_NAME)
+CONDA_ENV_PY = $(CONDA_ENV_DIR)/bin/python
+
+TOX = $(CONDA_ENV_DIR)/bin/tox
+
+ifeq (,$(shell which conda))
+HAS_CONDA=False
+else
+HAS_CONDA=True
+endif
+
+
+ifeq (${CONDA_DEFAULT_ENV},$(CONDA_ENV_NAME))
+PROJECT_CONDA_ACTIVE=True
+else
+PROJECT_CONDA_ACTIVE=False
+endif
+
+
 
 
 define BROWSER_PYSCRIPT
@@ -15,15 +35,10 @@ except:
 webbrowser.open("file://" + pathname2url(os.path.abspath(sys.argv[1])))
 endef
 export BROWSER_PYSCRIPT
-
-#################################################################################
-# COMMANDS                                                                      #
-#################################################################################
-
+BROWSER := python -c "$$BROWSER_PYSCRIPT"
 
 ## alias for show-help
 help: show-help
-
 
 ## remove all build, test, coverage and Python artifacts
 clean: clean-build clean-pyc clean-test
@@ -50,78 +65,105 @@ clean-test:
 	rm -f .coverage
 	rm -fr htmlcov/
 
-## remove docs artifacts
-clean-docs:
-	$(MAKE) -C docs clean
+## check typing with mypy
+mypy:
+	source activate $(CONDA_ENV_NAME) && \
+	mypy --ignore-missing-imports $(PACKAGE_NAME)
 
 ## check style with flake8
 lint:
+	source activate $(CONDA_ENV_NAME) && \
 	flake8 $(PACKAGE_NAME) tests
 
 ## run tests quickly with the default Python
 test:
-	py.test
+	source activate $(CONDA_ENV_NAME) && \
+	pytest
+
 
 ## run tests on every Python version with tox
 test-all:
-	tox
+	$(TOX)
 
 ## check code coverage quickly with the default Python
 coverage:
-	coverage run --source snaketools -m pytest
-	coverage report -m
-	coverage html
+	source activate $(CONDA_ENV_NAME) && \
+	coverage run --source $(PACKAGE_NAME) -m pytest && \
+	coverage report -m && \
+	coverage html && \
 	$(BROWSER) htmlcov/index.html
 
 ## generate Sphinx HTML documentation, including API docs
 docs:
-	rm -f docs/snaketools.rst
+	rm -f docs/$(PACKAGE_NAME).rst
+	rm -f docs/$(PACKAGE_NAME).*.rst
 	rm -f docs/modules.rst
-	$(MAKE) -C docs clean
-	$(MAKE) -C docs html
+	source activate $(CONDA_ENV_NAME) && \
+	$(MAKE) -C docs clean && \
+	$(MAKE) -C docs html && \
 	$(BROWSER) docs/_build/html/index.html
 
 ## compile the docs watching for changes
 servedocs: docs
+	source activate $(CONDA_ENV_NAME) && \
 	watchmedo shell-command -p '*.rst' -c '$(MAKE) -C docs html' -R -D .
 
 ## package and upload a release
 release: clean
-	python setup.py sdist upload
+	source activate $(CONDA_ENV_NAME) && \
+	python setup.py sdist upload && \
 	python setup.py bdist_wheel upload
 
 ## builds source and wheel package
 dist: clean
-	python setup.py sdist
-	python setup.py bdist_wheel
+	source activate $(CONDA_ENV_NAME) && \
+	python setup.py sdist && \
+	python setup.py bdist_wheel && \
 	ls -l dist
 
+## installs virtual environments and requirements
+install: clean install-conda-env install-dev-reqs install-pip-reqs install-pip-editable
+
+install-pip-editable:
+	source activate $(CONDA_ENV_NAME) && \
+	pip install -e .
 
 
-uninstall_python:
-	source activate $(CONDA_ENV_NAME); \
-	rm -rf $$(jupyter --data-dir)/kernels/$(CONDA_ENV_NAME); \
+error_if_active_conda_env:
+ifeq (True,$(PROJECT_CONDA_ACTIVE))
+	$(error "This project's conda env is active." )
+endif
+
+
+install-conda-env:
+	conda create -n $(CONDA_ENV_NAME) --file requirements.txt --yes
+
+install-pip-reqs:
+	source activate $(CONDA_ENV_NAME) && \
+	pip install -r requirements.pip.txt && \
+	pip install -r requirements.dev.pip.txt
+
+
+install-jupyter-kernel:
+	source activate $(CONDA_ENV_NAME) && \
+	python -m ipykernel install --sys-prefix --name $(CONDA_ENV_NAME) --display-name "$(CONDA_ENV_NAME)"
+
+install-dev-reqs:
+	source activate $(CONDA_ENV_NAME) && \
+	conda install --file requirements_dev.txt --yes
+
+
+## uninstalls virtual environments and requirements
+uninstall-conda-env: error_if_active_conda_env
 	rm -rf $(CONDA_ENV_DIR)
 
-
-## Install Python Dependencies
-requirements: test_environment
-	pip install -r requirements.txt
-
-
-## Delete all compiled Python files
-clean_bytecode:
-	find . -name "__pycache__" -type d -exec rm -r {} \; ; \
-	find . -name "*.pyc" -exec rm {} \;
-
-
+## alias to test-all (purpose: minimal req for submitting a pull request)
+pull-req-check: test-all
 
 
 #################################################################################
 # Self Documenting Commands                                                     #
 #################################################################################
-
-.DEFAULT_GOAL := show-help
 
 # Inspired by <http://marmelab.com/blog/2016/02/29/auto-documented-makefile.html>
 # sed script explained:
