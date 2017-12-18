@@ -65,6 +65,8 @@ class SnakeRule(object):
         self.o = munch.Munch()  # outputs
         self.p = munch.Munch()  # params
 
+        self.extra = munch.Munch()  # params
+
         self._import_config_dict()
 
     def _import_config_dict(self):
