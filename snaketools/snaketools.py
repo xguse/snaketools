@@ -14,6 +14,9 @@ from logzero import logger as log  # noqa: F401
 from snaketools import errors as e
 
 
+__all__ = ["apply_template", "pathify_by_key_ends", "SnakeRun", "SnakeRule", "recode_graph", "rewrite_snakefile_no_rules"]
+
+
 class SnakeRun(object):
     """Initialize and manage information common to the whole run."""
 
