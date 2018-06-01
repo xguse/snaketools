@@ -6,6 +6,6 @@ flake8==3.5.0
 coverage==4.5.1
 Sphinx==1.7.5
 PyYAML==3.12
-pytest==3.3.1
+pytest==3.6.0
 pylama==7.4.3
 recommonmark==0.4.0
