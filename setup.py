@@ -48,7 +48,7 @@ test_requirements = ["pytest"]
 
 setup(
     name='snaketools',
-    version='0.0.7',
+    version='0.0.8',
     description="Small library of helper tools for setting up, graphing, and working with Snakemake rules.",
     long_description=readme + '\n\n' + history,
     author="Gus Dunn",
